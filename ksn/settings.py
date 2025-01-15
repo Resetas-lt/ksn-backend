@@ -31,8 +31,10 @@ INSTALLED_APPS = [
     # THIRD PARTY APPS
     'jazzmin',
     'rest_framework',
+    'django_ckeditor_5',
 
     # LOCAL APPS
+    'web',
 
     # DEFAULT APPS
     'django.contrib.admin',
@@ -120,15 +122,120 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CKEDITOR
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+customColorPalette = [
+    {
+        'color': 'hsl(4, 90%, 58%)',
+        'label': 'Red'
+    },
+    {
+        'color': 'hsl(340, 82%, 52%)',
+        'label': 'Pink'
+    },
+    {
+        'color': 'hsl(291, 64%, 42%)',
+        'label': 'Purple'
+    },
+    {
+        'color': 'hsl(262, 52%, 47%)',
+        'label': 'Deep Purple'
+    },
+    {
+        'color': 'hsl(231, 48%, 48%)',
+        'label': 'Indigo'
+    },
+    {
+        'color': 'hsl(207, 90%, 54%)',
+        'label': 'Blue'
+    },
+]
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['heading', '|', 'fontSize', 'fontFamily', 'bold', 'italic', 'alignment', '|', 'imageStyle:breakText', '|', 'link',
+                    'bulletedList', 'numberedList', 'blockQuote', '|', 'insertTable', 'imageUpload', '|', 'undo', 'redo',
+                    'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight', 'imageStyle:side',
+                    ],
+
+        'language': 'lt',
+        'height': '300px',
+        'width': '100%',
+
+    },
+    'extends': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', 'heading3',
+            '|',
+            'bulletedList', 'numberedList',
+            '|',
+            'blockQuote',
+        ],
+        'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
+                    'code', 'subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
+                    'bulletedList', 'numberedList', 'todoList', '|',  'blockQuote', 'imageUpload', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
+                    'insertTable',],
+        'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
+                        'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side',  '|'],
+            'styles': [
+                'full',
+                'side',
+                'alignLeft',
+                'alignRight',
+                'alignCenter',
+            ],
+
+        },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells',
+                               'tableProperties', 'tableCellProperties'],
+            'tableProperties': {
+                'borderColors': customColorPalette,
+                'backgroundColors': customColorPalette
+            },
+            'tableCellProperties': {
+                'borderColors': customColorPalette,
+                'backgroundColors': customColorPalette
+            }
+        },
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Paragraph',
+                 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1',
+                 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2',
+                 'title': 'Heading 2', 'class': 'ck-heading_heading2'},
+                {'model': 'heading3', 'view': 'h3',
+                 'title': 'Heading 3', 'class': 'ck-heading_heading3'}
+            ]
+        },
+    },
+    'list': {
+        'properties': {
+            'styles': 'true',
+            'startIndex': 'true',
+            'reversed': 'true',
+        }
+    }
+}
+
+# Define a constant in settings.py to specify file upload permissions
+# Possible values: "staff", "authenticated", "any"
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
 
 # CORS SETTINGS
 CORS_ALLOW_CREDENTIALS = True
@@ -162,28 +269,7 @@ REST_FRAMEWORK = {
 JAZZMIN_SETTINGS = {
     "site_title": "KSN.lt",
     "site_header": "KSN.lt",
-    "site_logo": "img/logo.png",
+    "site_brand": "KSN.lt",
+    # "site_logo": "img/logo.png",
     "welcome_sign": "Prisijungimas tik autorizuotam personalui!",
-    "search_model": "auth.User",
-    "user_avatar": None,
-    "topmenu_links": [],
-    "show_ui_builder": True,
-    "related_modal_active": False,
-    "show_related_modal": False,
-    "custom_css": None,
-    "custom_js": None,
-    "show_ui_builder": True,
-    "changeform_format": "horizontal_tabs",
-    "changeform_format_overrides": {"auth.user": "collapsible"},
-    "changeform_format_overrides": {"auth.group": "vertical_tabs"},
-    "related_modal_active": False,
-    "show_related_modal": False,
-    "navigation_expanded": True,
-    "hide_apps": [],
-    "hide_models": [],
-    "order_with_respect_to": [],
-    "custom_links": {
-        "Admin documentation": "https://docs.djangoproject.com/",
-        "GitHub repository": "",
-    },
 }
