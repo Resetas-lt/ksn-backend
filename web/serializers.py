@@ -4,10 +4,30 @@ from django.conf import settings
 
 from .models import (
     Post,
+    PostImage,
 )
 
 
-class NewsSerializer(serializers.ModelSerializer):
+class AbsoluteImageUrlField(serializers.ImageField):
+    def to_representation(self, value):
+        request = self.context.get('request')
+        if not value:
+            return None
+        if request is not None:
+            return request.build_absolute_uri(value.url)
+        return value.url
+
+
+class PostImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostImage
+        fields = "__all__"
+
+
+class PostSerializer(serializers.ModelSerializer):
+    thumbnail = AbsoluteImageUrlField()
+    images = PostImageSerializer(many=True, read_only=True)
+
     class Meta:
         model = Post
         fields = "__all__"

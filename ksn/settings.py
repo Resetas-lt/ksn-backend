@@ -136,6 +136,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
 # CKEDITOR
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_5_CONFIGS = {
@@ -182,8 +191,6 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
-# Define a constant in settings.py to specify file upload permissions
-# Possible values: "staff", "authenticated", "any"
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
 
 # CORS SETTINGS
@@ -218,6 +225,16 @@ JAZZMIN_SETTINGS = {
     "site_title": "KSN.lt",
     "site_header": "KSN.lt",
     "site_brand": "KSN.lt",
-    # "site_logo": "img/logo.png",
     "welcome_sign": "Prisijungimas tik autorizuotam personalui!",
+    "copyright": "MB RESETAS LT",
+
+    "icons": {
+        # DEFAULT
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.group": "fas fa-users",
+
+        # WEB
+        "web.post": "fas fa-newspaper",
+    }
 }
