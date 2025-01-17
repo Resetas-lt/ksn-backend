@@ -222,9 +222,9 @@ REST_FRAMEWORK = {
 
 # Jazzmin settings
 JAZZMIN_SETTINGS = {
-    "site_title": "KSN.lt",
-    "site_header": "KSN.lt",
-    "site_brand": "KSN.lt",
+    "site_title": "KSN.LT",
+    "site_header": "KSN.LT",
+    "site_brand": "KSN.LT",
     "welcome_sign": "Prisijungimas tik autorizuotam personalui!",
     "copyright": "MB RESETAS LT",
 
