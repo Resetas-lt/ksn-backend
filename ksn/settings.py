@@ -11,6 +11,8 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SITE_URL = "http://localhost:8000"
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -31,8 +33,11 @@ INSTALLED_APPS = [
     # THIRD PARTY APPS
     'jazzmin',
     'rest_framework',
+    'corsheaders',
+    'django_ckeditor_5',
 
     # LOCAL APPS
+    'web',
 
     # DEFAULT APPS
     'django.contrib.admin',
@@ -46,6 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -120,21 +126,77 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# SMTP
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+# CKEDITOR
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading', '|', 'fontSize', 'fontFamily', 'bold', 'italic', 'alignment', '|', 'link',
+            'bulletedList', 'numberedList', 'blockQuote', '|', 'insertTable', 'imageUpload', '|', 'undo', 'redo',
+            'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight', 'imageStyle:side'
+        ],
+        'language': 'lt',
+        'height': '300px',
+        'width': '100%',
+    },
+    'extends': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', 'heading3',
+            '|',
+            'bulletedList', 'numberedList',
+            '|',
+            'blockQuote',
+        ],
+        'toolbar': [
+            'heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
+            'code', 'subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
+            'bulletedList', 'numberedList', 'todoList', '|', 'blockQuote', 'imageUpload', '|',
+            'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
+            'insertTable', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight', 'imageStyle:side'
+        ],
+        'image': {
+            'toolbar': [
+                'imageTextAlternative', '|', 'imageStyle:alignLeft',
+                'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side', '|'
+            ],
+            'styles': [
+                'full',
+                'side',
+                'alignLeft',
+                'alignRight',
+                'alignCenter',
+            ]
+        },
+        'height': '300px',
+        'width': '100%',
+    }
+}
+
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
+
 # CORS SETTINGS
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:3000',
     'http://localhost:3000',
 ]
 
@@ -160,30 +222,19 @@ REST_FRAMEWORK = {
 
 # Jazzmin settings
 JAZZMIN_SETTINGS = {
-    "site_title": "KSN.lt",
-    "site_header": "KSN.lt",
-    "site_logo": "img/logo.png",
+    "site_title": "KSN.LT",
+    "site_header": "KSN.LT",
+    "site_brand": "KSN.LT",
     "welcome_sign": "Prisijungimas tik autorizuotam personalui!",
-    "search_model": "auth.User",
-    "user_avatar": None,
-    "topmenu_links": [],
-    "show_ui_builder": True,
-    "related_modal_active": False,
-    "show_related_modal": False,
-    "custom_css": None,
-    "custom_js": None,
-    "show_ui_builder": True,
-    "changeform_format": "horizontal_tabs",
-    "changeform_format_overrides": {"auth.user": "collapsible"},
-    "changeform_format_overrides": {"auth.group": "vertical_tabs"},
-    "related_modal_active": False,
-    "show_related_modal": False,
-    "navigation_expanded": True,
-    "hide_apps": [],
-    "hide_models": [],
-    "order_with_respect_to": [],
-    "custom_links": {
-        "Admin documentation": "https://docs.djangoproject.com/",
-        "GitHub repository": "",
-    },
+    "copyright": "MB RESETAS LT",
+
+    "icons": {
+        # DEFAULT
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.group": "fas fa-users",
+
+        # WEB
+        "web.post": "fas fa-newspaper",
+    }
 }
