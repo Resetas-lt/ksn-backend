@@ -11,7 +11,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SITE_URL = "http://localhost:8000"
+SITE_URL = "https://api.ksn.lt"
 
 
 # Quick-start development settings - unsuitable for production
@@ -22,9 +22,9 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['api.ksn.lt']
 
 
 # Application definition
@@ -238,3 +238,8 @@ JAZZMIN_SETTINGS = {
         "web.post": "fas fa-newspaper",
     }
 }
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
