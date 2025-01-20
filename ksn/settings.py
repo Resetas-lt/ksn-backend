@@ -202,6 +202,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     'https://ksn.lt',
+    'https://www.ksn.lt',
 ]
 
 # CSRF
