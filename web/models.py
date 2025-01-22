@@ -47,3 +47,19 @@ class PostImage(models.Model):
     class Meta:
         verbose_name = "Nuotrauka"
         verbose_name_plural = "Nuotraukos"
+
+
+class EmployeeContact(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Darbuotojas")
+    division = models.CharField(max_length=100, verbose_name="Skyrius")
+    position = models.CharField(max_length=100, verbose_name="Pareigos")
+    phone = models.CharField(max_length=100, verbose_name="Telefonas")
+    email = models.EmailField(max_length=100, verbose_name="El. paštas")
+    show = models.BooleanField(default=True, verbose_name="Rodyti")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Kontaktas"
+        verbose_name_plural = "Kontaktai"
