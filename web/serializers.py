@@ -5,6 +5,7 @@ from django.conf import settings
 from .models import (
     Post,
     PostImage,
+    EmployeeContact,
 )
 
 
@@ -46,3 +47,9 @@ class PostSerializer(serializers.ModelSerializer):
         media_url = settings.MEDIA_URL
         full_media_url = f"{settings.SITE_URL}{media_url}"
         return content.replace(media_url, full_media_url)
+
+
+class EmployeeContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EmployeeContact
+        fields = "__all__"

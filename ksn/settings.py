@@ -241,6 +241,7 @@ JAZZMIN_SETTINGS = {
 
         # WEB
         "web.post": "fas fa-newspaper",
+        "web.employeecontact": "fas fa-phone"
     }
 }
 

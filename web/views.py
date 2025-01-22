@@ -9,8 +9,14 @@ from django.core.mail import send_mail
 from email.utils import formataddr
 
 
-from .models import Post
-from .serializers import PostSerializer
+from .models import (
+    Post,
+    EmployeeContact,
+)
+from .serializers import (
+    PostSerializer,
+    EmployeeContactSerializer,
+)
 
 
 class ContactusView(APIView):
@@ -18,8 +24,6 @@ class ContactusView(APIView):
 
     def post(self, request):
         data = request.data
-
-        print(data)
 
         firstname = data.get("firstname")
         email = data.get("email")
@@ -59,3 +63,25 @@ class PostsList(APIView):
             "latest_posts": latest_posts_serializer.data,
         }
         return Response(context, status=status.HTTP_200_OK)
+
+
+class PostDetails(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, slug):
+        post = Post.objects.get(slug=slug)
+
+        serializer = PostSerializer(post, context={"request": request})
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ContactList(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        contacts = EmployeeContact.objects.filter(show=True)
+
+        serializer = EmployeeContactSerializer(contacts, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
