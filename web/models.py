@@ -63,3 +63,30 @@ class EmployeeContact(models.Model):
     class Meta:
         verbose_name = "Kontaktas"
         verbose_name_plural = "Kontaktai"
+
+
+class BudgetReport(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Pavadinimas")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Sukurta")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "biudžeto ataskaita"
+        verbose_name_plural = "biudžeto ataskaitos"
+
+
+class BudgetReportFile(models.Model):
+    report = models.ForeignKey(
+        BudgetReport, on_delete=models.CASCADE, related_name="files")
+    file = models.FileField(upload_to="budget_reports",
+                            verbose_name="Failas")
+
+    def __str__(self):
+        return self.report.title
+
+    class Meta:
+        verbose_name = "Failas"
+        verbose_name_plural = "Failai"

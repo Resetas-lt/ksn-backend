@@ -6,7 +6,11 @@ from .models import (
     Post,
     PostImage,
     EmployeeContact,
+    BudgetReport,
+    BudgetReportFile,
 )
+
+import os
 
 
 class AbsoluteImageUrlField(serializers.ImageField):
@@ -52,4 +56,25 @@ class PostSerializer(serializers.ModelSerializer):
 class EmployeeContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmployeeContact
+        fields = "__all__"
+
+
+class BudgetReportFileSerializer(serializers.ModelSerializer):
+    file = AbsoluteImageUrlField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = BudgetReportFile
+        fields = "__all__"
+
+    def get_name(self, obj):
+        return os.path.basename(obj.file.name)
+
+
+class BudgetReportSerializer(serializers.ModelSerializer):
+    files = BudgetReportFileSerializer(many=True, read_only=True)
+    created_at = serializers.DateTimeField(format="%Y-%m-%d")
+
+    class Meta:
+        model = BudgetReport
         fields = "__all__"
