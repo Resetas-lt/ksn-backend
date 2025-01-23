@@ -4,11 +4,18 @@ from .models import (
     Post,
     PostImage,
     EmployeeContact,
+    BudgetReport,
+    BudgetReportFile,
 )
 
 
 class PostImageInline(admin.TabularInline):
     model = PostImage
+    extra = 1
+
+
+class BudgetReportFileInline(admin.TabularInline):
+    model = BudgetReportFile
     extra = 1
 
 
@@ -25,5 +32,12 @@ class EmployeeContactAdmin(admin.ModelAdmin):
     search_fields = ['name', 'division', 'position', 'phone', 'email']
 
 
+class BudgetReportAdmin(admin.ModelAdmin):
+    inlines = [BudgetReportFileInline]
+    list_display = ('title', 'created_at')
+    search_fields = ['title']
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(EmployeeContact, EmployeeContactAdmin)
+admin.site.register(BudgetReport, BudgetReportAdmin)

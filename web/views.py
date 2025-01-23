@@ -12,10 +12,12 @@ from email.utils import formataddr
 from .models import (
     Post,
     EmployeeContact,
+    BudgetReport,
 )
 from .serializers import (
     PostSerializer,
     EmployeeContactSerializer,
+    BudgetReportSerializer,
 )
 
 
@@ -83,5 +85,17 @@ class ContactList(APIView):
         contacts = EmployeeContact.objects.filter(show=True).order_by('id')
 
         serializer = EmployeeContactSerializer(contacts, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class BudgetReportList(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        reports = BudgetReport.objects.all().order_by('-created_at')
+
+        serializer = BudgetReportSerializer(
+            reports, many=True, context={"request": request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
