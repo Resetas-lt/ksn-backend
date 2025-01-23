@@ -80,7 +80,7 @@ class ContactList(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        contacts = EmployeeContact.objects.filter(show=True)
+        contacts = EmployeeContact.objects.filter(show=True).order_by('-id')
 
         serializer = EmployeeContactSerializer(contacts, many=True)
 
