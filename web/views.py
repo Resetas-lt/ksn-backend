@@ -13,11 +13,13 @@ from .models import (
     Post,
     EmployeeContact,
     BudgetReport,
+    FinancesReport,
 )
 from .serializers import (
     PostSerializer,
     EmployeeContactSerializer,
     BudgetReportSerializer,
+    FinancesReportSerializer,
 )
 
 
@@ -96,6 +98,18 @@ class BudgetReportList(APIView):
         reports = BudgetReport.objects.all().order_by('-created_at')
 
         serializer = BudgetReportSerializer(
+            reports, many=True, context={"request": request})
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class FinancesReportList(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        reports = FinancesReport.objects.all().order_by('-created_at')
+
+        serializer = FinancesReportSerializer(
             reports, many=True, context={"request": request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)

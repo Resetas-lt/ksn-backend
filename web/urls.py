@@ -6,6 +6,7 @@ from .views import (
     PostDetails,
     ContactList,
     BudgetReportList,
+    FinancesReportList,
 )
 
 urlpatterns = [
@@ -14,4 +15,5 @@ urlpatterns = [
     path('posts/<slug:slug>/', PostDetails.as_view()),
     path('contacts/', ContactList.as_view()),
     path('budget-reports/', BudgetReportList.as_view()),
+    path('finances-reports/', FinancesReportList.as_view()),
 ]
