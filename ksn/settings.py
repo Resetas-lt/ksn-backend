@@ -244,6 +244,7 @@ JAZZMIN_SETTINGS = {
         "web.employeecontact": "fas fa-phone",
         "web.budgetreport": "fas fa-file-invoice-dollar",
         "web.financesreport": "fas fa-money-bill",
+        "web.salaryreport": "fas fa-coins",
     }
 }
 
