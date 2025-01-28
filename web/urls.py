@@ -7,6 +7,7 @@ from .views import (
     ContactList,
     BudgetReportList,
     FinancesReportList,
+    SalaryReportList,
 )
 
 urlpatterns = [
@@ -16,4 +17,5 @@ urlpatterns = [
     path('contacts/', ContactList.as_view()),
     path('budget-reports/', BudgetReportList.as_view()),
     path('finances-reports/', FinancesReportList.as_view()),
+    path('salary-reports/', SalaryReportList.as_view()),
 ]

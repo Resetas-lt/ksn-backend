@@ -117,3 +117,30 @@ class FinancesReportFile(models.Model):
     class Meta:
         verbose_name = "Failas"
         verbose_name_plural = "Failai"
+
+
+class SalaryReport(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Pavadinimas")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Sukurta")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Atlyginimų ataskaita"
+        verbose_name_plural = "Atlyginimų ataskaitos"
+
+
+class SalaryReportFile(models.Model):
+    report = models.ForeignKey(
+        SalaryReport, on_delete=models.CASCADE, related_name="files")
+    file = models.FileField(upload_to="salary_reports",
+                            verbose_name="Failas")
+
+    def __str__(self):
+        return self.report.title
+
+    class Meta:
+        verbose_name = "Failas"
+        verbose_name_plural = "Failai"
