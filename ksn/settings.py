@@ -241,7 +241,9 @@ JAZZMIN_SETTINGS = {
 
         # WEB
         "web.post": "fas fa-newspaper",
-        "web.employeecontact": "fas fa-phone"
+        "web.employeecontact": "fas fa-phone",
+        "web.budgetreport": "fas fa-file-invoice-dollar",
+        "web.financesreport": "fas fa-money-bill",
     }
 }
 

@@ -8,6 +8,8 @@ from .models import (
     EmployeeContact,
     BudgetReport,
     BudgetReportFile,
+    FinancesReport,
+    FinancesReportFile,
 )
 
 import os
@@ -77,4 +79,25 @@ class BudgetReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BudgetReport
+        fields = "__all__"
+
+
+class FinancesReportFileSerializer(serializers.ModelSerializer):
+    file = AbsoluteImageUrlField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = FinancesReportFile
+        fields = "__all__"
+
+    def get_name(self, obj):
+        return os.path.basename(obj.file.name)
+
+
+class FinancesReportSerializer(serializers.ModelSerializer):
+    files = FinancesReportFileSerializer(many=True, read_only=True)
+    created_at = serializers.DateTimeField(format="%Y-%m-%d")
+
+    class Meta:
+        model = FinancesReport
         fields = "__all__"
