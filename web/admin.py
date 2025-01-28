@@ -8,6 +8,8 @@ from .models import (
     BudgetReportFile,
     FinancesReport,
     FinancesReportFile,
+    SalaryReport,
+    SalaryReportFile,
 )
 
 
@@ -23,6 +25,11 @@ class BudgetReportFileInline(admin.TabularInline):
 
 class FinancesReportFileInline(admin.TabularInline):
     model = FinancesReportFile
+    extra = 1
+
+
+class SalaryReportFileInline(admin.TabularInline):
+    model = SalaryReportFile
     extra = 1
 
 
@@ -51,7 +58,14 @@ class FinancesReportAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 
+class SalaryReportAdmin(admin.ModelAdmin):
+    inlines = [SalaryReportFileInline]
+    list_display = ('title', 'created_at')
+    search_fields = ['title']
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(EmployeeContact, EmployeeContactAdmin)
 admin.site.register(BudgetReport, BudgetReportAdmin)
 admin.site.register(FinancesReport, FinancesReportAdmin)
+admin.site.register(SalaryReport, SalaryReportAdmin)
