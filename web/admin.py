@@ -5,10 +5,13 @@ from .models import (
     PostImage,
     EmployeeContact,
     BudgetReport,
+    BudgetQuarter,
     BudgetReportFile,
     FinancesReport,
+    FinancesQuarter,
     FinancesReportFile,
     SalaryReport,
+    SalaryQuarter,
     SalaryReportFile,
 )
 
@@ -47,25 +50,43 @@ class EmployeeContactAdmin(admin.ModelAdmin):
 
 
 class BudgetReportAdmin(admin.ModelAdmin):
-    inlines = [BudgetReportFileInline]
     list_display = ('title', 'created_at')
+    search_fields = ['title']
+
+
+class BudgetQuarterAdmin(admin.ModelAdmin):
+    inlines = [BudgetReportFileInline]
+    list_display = ['title']
     search_fields = ['title']
 
 
 class FinancesReportAdmin(admin.ModelAdmin):
-    inlines = [FinancesReportFileInline]
     list_display = ('title', 'created_at')
     search_fields = ['title']
 
 
+class FinancesQuarterAdmin(admin.ModelAdmin):
+    inlines = [FinancesReportFileInline]
+    list_display = ['title']
+    search_fields = ['title']
+
+
 class SalaryReportAdmin(admin.ModelAdmin):
-    inlines = [SalaryReportFileInline]
     list_display = ('title', 'created_at')
+    search_fields = ['title']
+
+
+class SalaryQuarterAdmin(admin.ModelAdmin):
+    inlines = [SalaryReportFileInline]
+    list_display = ['title']
     search_fields = ['title']
 
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(EmployeeContact, EmployeeContactAdmin)
 admin.site.register(BudgetReport, BudgetReportAdmin)
+admin.site.register(BudgetQuarter, BudgetQuarterAdmin)
 admin.site.register(FinancesReport, FinancesReportAdmin)
+admin.site.register(FinancesQuarter, FinancesQuarterAdmin)
 admin.site.register(SalaryReport, SalaryReportAdmin)
+admin.site.register(SalaryQuarter, SalaryQuarterAdmin)
