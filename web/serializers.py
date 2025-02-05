@@ -75,8 +75,16 @@ class BudgetReportFileSerializer(serializers.ModelSerializer):
         return os.path.basename(obj.file.name)
 
 
-class BudgetReportSerializer(serializers.ModelSerializer):
+class BudgetQuarterSerializer(serializers.ModelSerializer):
     files = BudgetReportFileSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = BudgetReport
+        fields = "__all__"
+
+
+class BudgetReportSerializer(serializers.ModelSerializer):
+    quarters = BudgetQuarterSerializer(many=True, read_only=True)
     created_at = serializers.DateTimeField(format="%Y-%m-%d")
 
     class Meta:
@@ -96,9 +104,25 @@ class FinancesReportFileSerializer(serializers.ModelSerializer):
         return os.path.basename(obj.file.name)
 
 
-class FinancesReportSerializer(serializers.ModelSerializer):
+class FinancesQuarterSerializer(serializers.ModelSerializer):
     files = FinancesReportFileSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = FinancesReport
+        fields = "__all__"
+
+
+class FinancesReportSerializer(serializers.ModelSerializer):
+    quarters = FinancesQuarterSerializer(many=True, read_only=True)
     created_at = serializers.DateTimeField(format="%Y-%m-%d")
+
+    class Meta:
+        model = FinancesReport
+        fields = "__all__"
+
+
+class FinancesQuarterSerializer(serializers.ModelSerializer):
+    files = FinancesReportFileSerializer(many=True, read_only=True)
 
     class Meta:
         model = FinancesReport
@@ -117,8 +141,16 @@ class SalaryReportFileSerializer(serializers.ModelSerializer):
         return os.path.basename(obj.file.name)
 
 
-class SalaryReportSerializer(serializers.ModelSerializer):
+class SalaryQuarterSerializer(serializers.ModelSerializer):
     files = SalaryReportFileSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = SalaryReport
+        fields = "__all__"
+
+
+class SalaryReportSerializer(serializers.ModelSerializer):
+    quarters = SalaryQuarterSerializer(many=True, read_only=True)
     created_at = serializers.DateTimeField(format="%Y-%m-%d")
 
     class Meta:

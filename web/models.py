@@ -78,14 +78,27 @@ class BudgetReport(models.Model):
         verbose_name_plural = "biudžeto ataskaitos"
 
 
-class BudgetReportFile(models.Model):
+class BudgetQuarter(models.Model):
     report = models.ForeignKey(
-        BudgetReport, on_delete=models.CASCADE, related_name="files")
+        BudgetReport, null=True, on_delete=models.CASCADE, related_name="quarters", verbose_name="Ataskaita")
+    title = models.CharField(max_length=100, verbose_name="Pavadinimas")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Biudžeto ketvirtis"
+        verbose_name_plural = "Biudžeto ketvirčiai"
+
+
+class BudgetReportFile(models.Model):
+    quarter = models.ForeignKey(
+        BudgetQuarter, null=True, on_delete=models.CASCADE, related_name="files", verbose_name="Ketvirtis")
     file = models.FileField(upload_to="budget_reports",
                             verbose_name="Failas")
 
     def __str__(self):
-        return self.report.title
+        return self.quarter.title
 
     class Meta:
         verbose_name = "Failas"
@@ -105,14 +118,27 @@ class FinancesReport(models.Model):
         verbose_name_plural = "Finansų ataskaitos"
 
 
-class FinancesReportFile(models.Model):
+class FinancesQuarter(models.Model):
     report = models.ForeignKey(
-        FinancesReport, on_delete=models.CASCADE, related_name="files")
+        FinancesReport, null=True, on_delete=models.CASCADE, related_name="quarters", verbose_name="Ataskaita")
+    title = models.CharField(max_length=100, verbose_name="Pavadinimas")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Finansų ketvirtis"
+        verbose_name_plural = "Finansų ketvirčiai"
+
+
+class FinancesReportFile(models.Model):
+    quarter = models.ForeignKey(
+        FinancesQuarter, null=True, on_delete=models.CASCADE, related_name="files", verbose_name="Ketvirtis")
     file = models.FileField(upload_to="finances_reports",
                             verbose_name="Failas")
 
     def __str__(self):
-        return self.report.title
+        return self.quarter.title
 
     class Meta:
         verbose_name = "Failas"
@@ -132,14 +158,27 @@ class SalaryReport(models.Model):
         verbose_name_plural = "Atlyginimų ataskaitos"
 
 
-class SalaryReportFile(models.Model):
+class SalaryQuarter(models.Model):
     report = models.ForeignKey(
-        SalaryReport, on_delete=models.CASCADE, related_name="files")
+        SalaryReport, null=True, on_delete=models.CASCADE, related_name="quarters", verbose_name="Ataskaita")
+    title = models.CharField(max_length=100, verbose_name="Pavadinimas")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Atlyginimų ketvirtis"
+        verbose_name_plural = "Atlyginimų ketvirčiai"
+
+
+class SalaryReportFile(models.Model):
+    quarter = models.ForeignKey(
+        SalaryQuarter, null=True, on_delete=models.CASCADE, related_name="files", verbose_name="Ketvirtis")
     file = models.FileField(upload_to="salary_reports",
                             verbose_name="Failas")
 
     def __str__(self):
-        return self.report.title
+        return self.quarter.title
 
     class Meta:
         verbose_name = "Failas"
