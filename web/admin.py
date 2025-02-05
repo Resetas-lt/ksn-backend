@@ -56,7 +56,7 @@ class BudgetReportAdmin(admin.ModelAdmin):
 
 class BudgetQuarterAdmin(admin.ModelAdmin):
     inlines = [BudgetReportFileInline]
-    list_display = ['title']
+    list_display = ('report', 'title')
     search_fields = ['title']
 
 
@@ -67,7 +67,7 @@ class FinancesReportAdmin(admin.ModelAdmin):
 
 class FinancesQuarterAdmin(admin.ModelAdmin):
     inlines = [FinancesReportFileInline]
-    list_display = ['title']
+    list_display = ('report', 'title')
     search_fields = ['title']
 
 
@@ -78,7 +78,7 @@ class SalaryReportAdmin(admin.ModelAdmin):
 
 class SalaryQuarterAdmin(admin.ModelAdmin):
     inlines = [SalaryReportFileInline]
-    list_display = ['title']
+    list_display = ('report', 'title')
     search_fields = ['title']
 
 
