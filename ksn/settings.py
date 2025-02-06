@@ -248,6 +248,7 @@ JAZZMIN_SETTINGS = {
         "web.financesquarter": "fas fa-calendar",
         "web.salaryreport": "fas fa-coins",
         "web.salaryquarter": "fas fa-calendar",
+        "web.project": "fas fa-project-diagram",
     }
 }
 

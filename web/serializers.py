@@ -12,6 +12,8 @@ from .models import (
     FinancesReportFile,
     SalaryReport,
     SalaryReportFile,
+    Project,
+    ProjectFile,
 )
 
 import os
@@ -155,4 +157,25 @@ class SalaryReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SalaryReport
+        fields = "__all__"
+
+
+class ProjectFileSerializer(serializers.ModelSerializer):
+    file = AbsoluteImageUrlField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProjectFile
+        fields = "__all__"
+
+    def get_name(self, obj):
+        return os.path.basename(obj.file.name)
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    thumbnail = AbsoluteImageUrlField()
+    files = ProjectFileSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Project
         fields = "__all__"

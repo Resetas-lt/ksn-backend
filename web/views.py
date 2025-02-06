@@ -15,6 +15,7 @@ from .models import (
     BudgetReport,
     FinancesReport,
     SalaryReport,
+    Project,
 )
 from .serializers import (
     PostSerializer,
@@ -22,6 +23,7 @@ from .serializers import (
     BudgetReportSerializer,
     FinancesReportSerializer,
     SalaryReportSerializer,
+    ProjectSerializer,
 )
 
 
@@ -125,5 +127,17 @@ class SalaryReportList(APIView):
 
         serializer = SalaryReportSerializer(
             reports, many=True, context={"request": request})
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ProjectList(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        projects = Project.objects.all().order_by('id')
+
+        serializer = ProjectSerializer(
+            projects, many=True, context={"request": request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)

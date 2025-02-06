@@ -183,3 +183,34 @@ class SalaryReportFile(models.Model):
     class Meta:
         verbose_name = "Failas"
         verbose_name_plural = "Failai"
+
+
+class Project(models.Model):
+    title = models.CharField(max_length=255, verbose_name="Pavadinimas")
+    description = models.CharField(
+        max_length=100, blank=True, null=True, verbose_name="Aprašymas")
+    thumbnail = models.ImageField(
+        upload_to="project_thumbnails", blank=True, null=True, verbose_name="Nuotrauka")
+    project_id = models.CharField(
+        max_length=100, blank=True, null=True, verbose_name="Projekto ID")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Projektas"
+        verbose_name_plural = "Projektai"
+
+
+class ProjectFile(models.Model):
+    project = models.ForeignKey(
+        Project, null=True, on_delete=models.CASCADE, related_name="files")
+    file = models.FileField(upload_to="project_files", null=True,
+                            verbose_name="Failas")
+
+    def __str__(self):
+        return self.project.title
+
+    class Meta:
+        verbose_name = "Projekto failas"
+        verbose_name_plural = "Projektų failai"
