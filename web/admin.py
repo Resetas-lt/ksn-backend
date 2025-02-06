@@ -13,6 +13,8 @@ from .models import (
     SalaryReport,
     SalaryQuarter,
     SalaryReportFile,
+    Project,
+    ProjectFile,
 )
 
 
@@ -33,6 +35,11 @@ class FinancesReportFileInline(admin.TabularInline):
 
 class SalaryReportFileInline(admin.TabularInline):
     model = SalaryReportFile
+    extra = 1
+
+
+class ProjectFileInline(admin.TabularInline):
+    model = ProjectFile
     extra = 1
 
 
@@ -82,6 +89,13 @@ class SalaryQuarterAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 
+class ProjectAdmin(admin.ModelAdmin):
+    inlines = [ProjectFileInline]
+    list_display = ('title', 'description', 'thumbnail',
+                    'project_id')
+    search_fields = ('title', 'description', 'project_id')
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(EmployeeContact, EmployeeContactAdmin)
 admin.site.register(BudgetReport, BudgetReportAdmin)
@@ -90,3 +104,4 @@ admin.site.register(FinancesReport, FinancesReportAdmin)
 admin.site.register(FinancesQuarter, FinancesQuarterAdmin)
 admin.site.register(SalaryReport, SalaryReportAdmin)
 admin.site.register(SalaryQuarter, SalaryQuarterAdmin)
+admin.site.register(Project, ProjectAdmin)

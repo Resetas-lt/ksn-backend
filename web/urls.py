@@ -8,6 +8,7 @@ from .views import (
     BudgetReportList,
     FinancesReportList,
     SalaryReportList,
+    ProjectList,
 )
 
 urlpatterns = [
@@ -18,4 +19,5 @@ urlpatterns = [
     path('budget-reports/', BudgetReportList.as_view()),
     path('finances-reports/', FinancesReportList.as_view()),
     path('salary-reports/', SalaryReportList.as_view()),
+    path('projects/', ProjectList.as_view()),
 ]
