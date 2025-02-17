@@ -160,8 +160,8 @@ class RatingsView(APIView):
     def get(self, request):
         queryset = Rating.objects.all()
 
-        has_voted = queryset.filter(
-            ip_address=request.META.get('REMOTE_ADDR')).exists()
+        ip_address = self.get_client_ip(request)
+        has_voted = queryset.filter(ip_address=ip_address).exists()
 
         total_ratings = queryset.count()
         perfect_ratings = queryset.filter(rating="perfect").count()
