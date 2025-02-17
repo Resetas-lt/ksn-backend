@@ -16,7 +16,9 @@ from .models import (
     FinancesReport,
     SalaryReport,
     Project,
+    Rating,
 )
+
 from .serializers import (
     PostSerializer,
     EmployeeContactSerializer,
@@ -24,6 +26,7 @@ from .serializers import (
     FinancesReportSerializer,
     SalaryReportSerializer,
     ProjectSerializer,
+    RatingSerializer,
 )
 
 
@@ -141,3 +144,50 @@ class ProjectList(APIView):
             projects, many=True, context={"request": request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class RatingsView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        queryset = Rating.objects.all()
+
+        has_voted = queryset.filter(
+            ip_address=request.META.get('REMOTE_ADDR')).exists()
+
+        total_ratings = queryset.count()
+        perfect_ratings = queryset.filter(rating="perfect").count()
+        good_ratings = queryset.filter(rating="good").count()
+        decent_ratings = queryset.filter(rating="decent").count()
+        bad_ratings = queryset.filter(rating="bad").count()
+
+        context = {
+            "total_ratings": total_ratings,
+            "perfect_ratings": perfect_ratings,
+            "good_ratings": good_ratings,
+            "decent_ratings": decent_ratings,
+            "bad_ratings": bad_ratings,
+            "has_voted": has_voted,
+        }
+
+        return Response(context, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        data = request.data
+
+        ip_address = request.META.get('REMOTE_ADDR')
+        rating = data.get("rating")
+
+        # Check if the user has already voted
+        if Rating.objects.filter(ip_address=ip_address).exists():
+            return Response({"message": "Jūs jau balsavote!"}, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = RatingSerializer(
+            data={"ip_address": ip_address, "rating": rating})
+
+        if serializer.is_valid():
+            serializer.save()
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"message": "Įvertinimas išsaugotas sėkmingai!"}, status=status.HTTP_200_OK)

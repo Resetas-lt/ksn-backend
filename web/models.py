@@ -214,3 +214,26 @@ class ProjectFile(models.Model):
     class Meta:
         verbose_name = "Projekto failas"
         verbose_name_plural = "Projektų failai"
+
+
+class Rating(models.Model):
+    RATING_CHOICES = [
+        ('perfect', 'Puikiai'),
+        ('good', 'Gerai'),
+        ('decent', 'Patenkinamai'),
+        ('bad', 'Blogai'),
+    ]
+
+    ip_address = models.GenericIPAddressField(
+        null=True, blank=True, verbose_name="Balsuotojo IP")
+    rating = models.CharField(
+        max_length=100, choices=RATING_CHOICES, verbose_name="Įvertinimas")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Sukurta")
+
+    def __str__(self):
+        return self.rating
+
+    class Meta:
+        verbose_name = "Įvertinimas"
+        verbose_name_plural = "Įvertinimai"

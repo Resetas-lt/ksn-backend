@@ -251,6 +251,7 @@ JAZZMIN_SETTINGS = {
         "web.salaryreport": "fas fa-coins",
         "web.salaryquarter": "fas fa-calendar",
         "web.project": "fas fa-project-diagram",
+        "web.rating": "fas fa-star-half-alt",
     }
 }
 

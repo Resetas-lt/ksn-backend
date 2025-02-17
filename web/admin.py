@@ -15,6 +15,7 @@ from .models import (
     SalaryReportFile,
     Project,
     ProjectFile,
+    Rating,
 )
 
 
@@ -96,6 +97,11 @@ class ProjectAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description', 'project_id')
 
 
+class RatingAdmin(admin.ModelAdmin):
+    list_display = ('ip_address', 'rating', 'created_at')
+    search_fields = ['rating']
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(EmployeeContact, EmployeeContactAdmin)
 admin.site.register(BudgetReport, BudgetReportAdmin)
@@ -105,3 +111,4 @@ admin.site.register(FinancesQuarter, FinancesQuarterAdmin)
 admin.site.register(SalaryReport, SalaryReportAdmin)
 admin.site.register(SalaryQuarter, SalaryQuarterAdmin)
 admin.site.register(Project, ProjectAdmin)
+admin.site.register(Rating, RatingAdmin)
