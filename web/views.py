@@ -149,6 +149,14 @@ class ProjectList(APIView):
 class RatingsView(APIView):
     permission_classes = [AllowAny]
 
+    def get_client_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        return ip
+
     def get(self, request):
         queryset = Rating.objects.all()
 
@@ -175,7 +183,7 @@ class RatingsView(APIView):
     def post(self, request):
         data = request.data
 
-        ip_address = request.META.get('REMOTE_ADDR')
+        ip_address = self.get_client_ip(request)
         rating = data.get("rating")
 
         # Check if the user has already voted
