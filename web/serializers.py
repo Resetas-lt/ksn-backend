@@ -14,6 +14,7 @@ from .models import (
     SalaryReportFile,
     Project,
     ProjectFile,
+    Car,
     Rating,
 )
 
@@ -179,6 +180,12 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
+        fields = "__all__"
+
+
+class CarSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Car
         fields = "__all__"
 
 

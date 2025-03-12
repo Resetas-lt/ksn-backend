@@ -216,6 +216,22 @@ class ProjectFile(models.Model):
         verbose_name_plural = "Projektų failai"
 
 
+class Car(models.Model):
+    make = models.CharField(max_length=100, verbose_name="Markė")
+    model = models.CharField(max_length=100, verbose_name="Modelis")
+    year = models.CharField(max_length=100, verbose_name="Metai")
+    plate = models.CharField(
+        max_length=100, verbose_name="Valstybinis numeris")
+    category = models.CharField(max_length=100, verbose_name="Kategorija")
+
+    def __str__(self):
+        return self.make
+
+    class Meta:
+        verbose_name = "Automobilis"
+        verbose_name_plural = "Automobiliai"
+
+
 class Rating(models.Model):
     RATING_CHOICES = [
         ('perfect', 'Puikiai'),
