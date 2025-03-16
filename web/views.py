@@ -17,6 +17,7 @@ from .models import (
     SalaryReport,
     Project,
     Car,
+    TenderReport,
     Rating,
 )
 
@@ -28,6 +29,7 @@ from .serializers import (
     SalaryReportSerializer,
     ProjectSerializer,
     CarSerializer,
+    TenderReportSerializer,
     RatingSerializer,
 )
 
@@ -155,6 +157,18 @@ class CarList(APIView):
         cars = Car.objects.all().order_by('id')
 
         serializer = CarSerializer(cars, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class TenderList(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        tenders = TenderReport.objects.all().order_by('id')
+
+        serializer = TenderReportSerializer(
+            tenders, many=True, context={"request": request})
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 

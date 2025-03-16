@@ -15,6 +15,8 @@ from .models import (
     Project,
     ProjectFile,
     Car,
+    TenderReport,
+    TenderFile,
     Rating,
 )
 
@@ -186,6 +188,26 @@ class ProjectSerializer(serializers.ModelSerializer):
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
+        fields = "__all__"
+
+
+class TenderFileSerializer(serializers.ModelSerializer):
+    file = AbsoluteImageUrlField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = TenderFile
+        fields = "__all__"
+
+    def get_name(self, obj):
+        return os.path.basename(obj.file.name)
+
+
+class TenderReportSerializer(serializers.ModelSerializer):
+    files = TenderFileSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = TenderReport
         fields = "__all__"
 
 

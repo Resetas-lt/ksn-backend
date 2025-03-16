@@ -16,6 +16,8 @@ from .models import (
     Project,
     ProjectFile,
     Car,
+    TenderReport,
+    TenderFile,
     Rating,
 )
 
@@ -42,6 +44,11 @@ class SalaryReportFileInline(admin.TabularInline):
 
 class ProjectFileInline(admin.TabularInline):
     model = ProjectFile
+    extra = 1
+
+
+class TenderFileInline(admin.TabularInline):
+    model = TenderFile
     extra = 1
 
 
@@ -103,6 +110,12 @@ class CarAdmin(admin.ModelAdmin):
     search_fields = ['make', 'model', 'year']
 
 
+class TenderReportAdmin(admin.ModelAdmin):
+    inlines = [TenderFileInline]
+    list_display = ('title', 'created_at')
+    search_fields = ['title']
+
+
 class RatingAdmin(admin.ModelAdmin):
     list_display = ('ip_address', 'rating', 'created_at')
     search_fields = ['rating']
@@ -118,4 +131,5 @@ admin.site.register(SalaryReport, SalaryReportAdmin)
 admin.site.register(SalaryQuarter, SalaryQuarterAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Car, CarAdmin)
+admin.site.register(TenderReport, TenderReportAdmin)
 admin.site.register(Rating, RatingAdmin)
