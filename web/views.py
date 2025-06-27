@@ -6,6 +6,9 @@ from rest_framework.permissions import AllowAny
 
 from django.core.mail import send_mail
 
+from django.core.mail import EmailMessage
+import mimetypes
+
 from email.utils import formataddr
 
 
@@ -62,6 +65,69 @@ class ContactusView(APIView):
             return Response({"message": "Message sent successfully!"}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"message": "Failed to send message!"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ReportView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        data = request.data
+        files = request.FILES
+
+        message = data.get("message")
+        subject_type = data.get("subject")
+
+        message_format = f"{subject_type}\n\n{message}"
+        email_subject = f"Naujas anoniminis pranešimas - {subject_type}"
+
+        try:
+            email = EmailMessage(
+                subject=email_subject,
+                body=message_format,
+                from_email="no-reply@ksn.lt",
+                to=["lukas@resetas.lt"],
+            )
+
+            # Process files
+            attached_files = []
+            for key, file in files.items():
+                # File validation
+                if file.size > 5 * 1024 * 1024:  # 5MB limit
+                    return Response(
+                        {"message": f"File {file.name} exceeds 5MB limit."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+                # Get MIME type
+                mime_type, _ = mimetypes.guess_type(file.name)
+                if not mime_type:
+                    mime_type = 'application/octet-stream'
+
+                # Read file content
+                file_content = file.read()
+
+                # Attach to email
+                email.attach(file.name, file_content, mime_type)
+                attached_files.append(file.name)
+
+            # Send email
+            email.send(fail_silently=False)
+
+            response_message = "Message sent successfully!"
+            if attached_files:
+                response_message += f" Attached files: {', '.join(attached_files)}"
+
+            return Response(
+                {"message": response_message},
+                status=status.HTTP_200_OK
+            )
+
+        except Exception as e:
+            print(f"Error: {str(e)}")
+            return Response(
+                {"message": "Failed to send message."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class PostsList(APIView):

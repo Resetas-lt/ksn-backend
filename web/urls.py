@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
     ContactusView,
+    ReportView,
     PostsList,
     PostDetails,
     ContactList,
@@ -17,6 +18,7 @@ from .views import (
 
 urlpatterns = [
     path('contactus/', ContactusView.as_view()),
+    path('report/', ReportView.as_view()),
     path('posts/', PostsList.as_view()),
     path('posts/<slug:slug>/', PostDetails.as_view()),
     path('contacts/', ContactList.as_view()),
