@@ -234,7 +234,7 @@ class LegalDocumentView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request):
-        documents = LegalDocument.objects.all().order_by('-created_at')
+        documents = LegalDocument.objects.all().order_by('name')
 
         serializer = LegalDocumentSerializer(
             documents, many=True, context={"request": request})
