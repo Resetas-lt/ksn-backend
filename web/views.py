@@ -84,8 +84,8 @@ class ReportView(APIView):
             email = EmailMessage(
                 subject=email_subject,
                 body=message_format,
-                from_email="renatas.semeta@ksn.lt",
-                to=["lukas@resetas.lt"],
+                from_email="no-reply@ksn.lt",
+                to=["renatas.semeta@resetas.lt"],
             )
 
             # Process files
