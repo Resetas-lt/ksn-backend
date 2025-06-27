@@ -18,6 +18,7 @@ from .models import (
     TenderReport,
     TenderFile,
     Rating,
+    LegalDocument,
 )
 
 import os
@@ -215,3 +216,15 @@ class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = "__all__"
+
+
+class LegalDocumentSerializer(serializers.ModelSerializer):
+    file = AbsoluteImageUrlField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = LegalDocument
+        fields = "__all__"
+
+    def get_name(self, obj):
+        return os.path.basename(obj.file.name)

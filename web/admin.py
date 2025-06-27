@@ -19,6 +19,7 @@ from .models import (
     TenderReport,
     TenderFile,
     Rating,
+    LegalDocument,
 )
 
 
@@ -121,6 +122,12 @@ class RatingAdmin(admin.ModelAdmin):
     search_fields = ['rating']
 
 
+class LegalDocumentAdmin(admin.ModelAdmin):
+    list_display = ('title', 'file', 'created_at')
+    search_fields = ['title']
+    list_filter = ['created_at']
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(EmployeeContact, EmployeeContactAdmin)
 admin.site.register(BudgetReport, BudgetReportAdmin)
@@ -133,3 +140,4 @@ admin.site.register(Project, ProjectAdmin)
 admin.site.register(Car, CarAdmin)
 admin.site.register(TenderReport, TenderReportAdmin)
 admin.site.register(Rating, RatingAdmin)
+admin.site.register(LegalDocument, LegalDocumentAdmin)

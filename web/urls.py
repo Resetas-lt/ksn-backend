@@ -12,6 +12,7 @@ from .views import (
     CarList,
     TenderList,
     RatingsView,
+    LegalDocumentView,
 )
 
 urlpatterns = [
@@ -26,4 +27,5 @@ urlpatterns = [
     path('cars/', CarList.as_view()),
     path('tenders/', TenderList.as_view()),
     path('ratings/', RatingsView.as_view()),
+    path('legal-documents/', LegalDocumentView.as_view()),
 ]

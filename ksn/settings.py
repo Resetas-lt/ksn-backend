@@ -254,6 +254,7 @@ JAZZMIN_SETTINGS = {
         "web.car": "fas fa-car",
         "web.tenderreport": "fas fa-file-invoice",
         "web.rating": "fas fa-star-half-alt",
+        "web.legaldocument": "fas fa-file-alt",
     }
 }
 

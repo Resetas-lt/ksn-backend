@@ -280,3 +280,17 @@ class Rating(models.Model):
     class Meta:
         verbose_name = "Įvertinimas"
         verbose_name_plural = "Įvertinimai"
+
+
+class LegalDocument(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Pavadinimas")
+    file = models.FileField(upload_to="legal_documents", verbose_name="Failas")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Sukurta")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Teisinis dokumentas"
+        verbose_name_plural = "Teisiniai dokumentai"

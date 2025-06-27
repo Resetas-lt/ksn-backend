@@ -19,9 +19,11 @@ from .models import (
     Car,
     TenderReport,
     Rating,
+    LegalDocument,
 )
 
 from .serializers import (
+    LegalDocumentSerializer,
     PostSerializer,
     EmployeeContactSerializer,
     BudgetReportSerializer,
@@ -226,3 +228,15 @@ class RatingsView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response({"message": "Įvertinimas išsaugotas sėkmingai!"}, status=status.HTTP_200_OK)
+
+
+class LegalDocumentView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        documents = LegalDocument.objects.all().order_by('-created_at')
+
+        serializer = LegalDocumentSerializer(
+            documents, many=True, context={"request": request})
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
